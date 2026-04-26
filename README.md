@@ -2,7 +2,7 @@
 
 **Production-grade fuzzy logic model for fintech credit risk assessment in African markets**
 
-> A rigorous, academic-grade implementation of fuzzy inference for credit risk scoring in fintech lending. Built on peer-reviewed research methodologies and calibrated for African borrower archetypes.
+> A rigorous, research-grade implementation of fuzzy inference for credit risk scoring in fintech lending. Built on peer-reviewed research methodologies and calibrated for African borrower archetypes.
 
 ---
 
@@ -174,15 +174,14 @@ pytest tests/test_model.py --cov=risksense --cov-report=html
 
 ## Research Methodology
 
-### Academic Foundation
+### Research Foundation
 
 RiskSense is built on the methodologies presented in:
 
 **"Mamdani and Sugeno Fuzzy Inference Systems for Credit Risk Scoring in Fintech Lending"**
 
 - Author: Ademola Adefemi
-- Student ID: UP2608586
-- Institution: University of Portsmouth
+- ORC ID: 0009-0006-0870-6798
 - Module: Advanced Artificial Intelligence
 - Format: IEEE-style research paper
 - Publication: SSRN (Social Science Research Network)
@@ -344,7 +343,7 @@ high_risk = get_profiles_by_category("High")
 
 ---
 
-## Author & Academic Credentials
+## Author & Publication Credentials
 
 **Ademola "Admoll" Adefemi**
 
@@ -369,7 +368,7 @@ high_risk = get_profiles_by_category("High")
 
 2. **Ross, T. J.** (2016). *Fuzzy Logic with Engineering Applications* (4th ed.). Wiley.
 
-3. **Adefemi, A.** (2025). "Mamdani and Sugeno Fuzzy Inference Systems for Credit Risk Scoring in Fintech Lending." IEEE-format research paper, University of Portsmouth Advanced AI Module. SSRN.
+3. **Adefemi, A.** (2025). "Mamdani and Sugeno Fuzzy Inference Systems for Credit Risk Scoring in Fintech Lending." IEEE-format research paper, Advanced AI Module. SSRN.
 
 4. **CBN Guidelines.** Central Bank of Nigeria. *Guidelines for Fintech Credit Operations*. Latest edition.
 
