@@ -13,12 +13,14 @@ RiskSense is a **Mamdani fuzzy inference system (FIS)** that assesses credit ris
 ### Why Fuzzy Logic for Credit Risk?
 
 Traditional credit scoring models (logistic regression, tree-based classifiers) assume clean data and stationary distributions. Fintech lending in Africa faces:
+
 - **Thin credit files** (limited bureau history)
 - **Informal income verification** (self-employed, gig workers)
 - **Complex overlapping risk factors** (income + employment + debt burden)
 - **Need for interpretability** (regulators, loan officers)
 
 Mamdani fuzzy systems excel at:
+
 1. **Capturing linguistic reasoning** ("high income" + "low debt" = "low risk")
 2. **Graceful handling of uncertainty** in incomplete data
 3. **Transparent, explainable rules** (not black-box)
@@ -29,6 +31,7 @@ Mamdani fuzzy systems excel at:
 ## Features
 
 ### Core Model
+
 - **4 Input Dimensions:**
   - Annual income (₦0–10M range, Nigerian fintech context)
   - Debt-to-income ratio (0–1, capped at 100% DTI)
@@ -42,12 +45,14 @@ Mamdani fuzzy systems excel at:
     - **High Risk:** 66–100 (decline or enhanced due diligence)
 
 ### Fuzzy Logic Subsystem
+
 - **32 core fuzzy rules** encoding financial heuristics
 - **3-level fuzzy sets** per input (low/medium/high or poor/fair/good)
 - **Triangular membership functions** for computational efficiency
 - **Centroid defuzzification** (Mamdani output aggregation)
 
 ### Validation & Testing
+
 - **8 comprehensive borrower profiles** covering:
   - Premium SME owners
   - Salaried professionals
@@ -70,6 +75,7 @@ Mamdani fuzzy systems excel at:
 ## Installation
 
 ### Requirements
+
 - Python 3.9+
 - `scikit-fuzzy` (fuzzy logic computation)
 - `numpy` (numerical arrays)
@@ -151,21 +157,25 @@ for p in high_risk:
 ## Running Tests
 
 ### All Tests
+
 ```bash
 pytest tests/test_model.py -v
 ```
 
 ### Specific Test Class
+
 ```bash
 pytest tests/test_model.py::TestAllProfiles -v
 ```
 
 ### Specific Test (e.g., Profile 1)
+
 ```bash
 pytest tests/test_model.py::TestAllProfiles::test_profile_1_premium_sme_owner -v
 ```
 
 ### Coverage Report
+
 ```bash
 pytest tests/test_model.py --cov=risksense --cov-report=html
 ```
@@ -208,21 +218,25 @@ The 32 core rules encode the following financial heuristics:
 ### Fuzzy Sets
 
 **Income (₦M):**
+
 - Low: [0, 0, 2.5]
 - Medium: [1.5, 4, 6.5]
 - High: [5.5, 10, 10]
 
 **DTI Ratio:**
+
 - Low: [0, 0, 0.35]
 - Medium: [0.25, 0.55, 0.75]
 - High: [0.65, 1.0, 1.0]
 
 **Credit Score:**
+
 - Poor: [0, 0, 40]
 - Fair: [30, 60, 80]
 - Good: [70, 100, 100]
 
 **Employment Stability (0–10):**
+
 - Low: [0, 0, 3]
 - Medium: [2, 5, 8]
 - High: [7, 10, 10]
@@ -271,26 +285,32 @@ risksense-core/
 ### `RiskSenseModel` Class
 
 #### `__init__()`
+
 Initialize the Mamdani FIS with all fuzzy variables and rules.
 
 #### `score(annual_income, debt_to_income, credit_score, employment_stability) → (float, str)`
+
 Compute risk score and category for a single borrower.
 
 **Parameters:**
+
 - `annual_income` (float): Annual income in millions NGN (0–10)
 - `debt_to_income` (float): DTI ratio (0–1)
 - `credit_score` (float): Credit history score (0–100)
 - `employment_stability` (float): Stability index (0–10)
 
 **Returns:**
+
 - `(risk_score, risk_category)` tuple
   - `risk_score` (float): 0–100
   - `risk_category` (str): "Low", "Medium", or "High"
 
 **Raises:**
+
 - `ValueError`: If any input is out of bounds
 
 **Example:**
+
 ```python
 model = create_model()
 score, category = model.score(2.5, 0.4, 75, 8.0)
@@ -298,12 +318,15 @@ score, category = model.score(2.5, 0.4, 75, 8.0)
 ```
 
 #### `score_batch(profiles) → list[dict]`
+
 Score multiple borrowers efficiently.
 
 **Parameters:**
+
 - `profiles` (list): List of dicts with keys: `annual_income`, `debt_to_income`, `credit_score`, `employment_stability`
 
 **Returns:**
+
 - List of result dicts with keys:
   - `risk_score` (float): 0–100
   - `risk_category` (str): "Low", "Medium", or "High"
@@ -312,6 +335,7 @@ Score multiple borrowers efficiently.
 ### Module Functions
 
 #### `create_model() → RiskSenseModel`
+
 Factory function to instantiate the FIS.
 
 ```python
@@ -320,6 +344,7 @@ model = create_model()
 ```
 
 #### `get_profiles() → list[dict]`
+
 Return all 8 test profiles.
 
 ```python
@@ -328,6 +353,7 @@ profiles = get_profiles()
 ```
 
 #### `get_profile_by_name(name: str) → dict | None`
+
 Retrieve a single profile by name.
 
 ```python
@@ -335,6 +361,7 @@ profile = get_profile_by_name("Profile 1: Premium SME Owner")
 ```
 
 #### `get_profiles_by_category(category: str) → list[dict]`
+
 Filter profiles by risk category.
 
 ```python
@@ -354,6 +381,7 @@ high_risk = get_profiles_by_category("High")
 - **GitHub:** [@Howdy-admoll](https://github.com/Howdy-admoll)
 
 ### Research Interests
+
 - Fuzzy inference systems for credit risk
 - Fintech infrastructure and payment systems
 - Nigerian regulatory environment (CBN guidelines)
@@ -385,6 +413,7 @@ This project is available under the MIT License. See `LICENSE` file for details.
 ## Disclaimer
 
 RiskSense is a research implementation for educational and testing purposes. While built on rigorous fuzzy logic methodology, credit risk assessment in production environments requires:
+
 - Regulatory compliance with CBN and applicable jurisdictions
 - Integration with verified credit bureau data
 - Human review by trained credit officers
