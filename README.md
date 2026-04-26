@@ -349,11 +349,10 @@ high_risk = get_profiles_by_category("High")
 **Ademola "Admoll" Adefemi**
 
 - **Current Role:** SRE (Site Reliability Engineer), Card Payment Team, Moniepoint Inc.
-- **Background:** Credit Analytics & Technical Operations, Indicina Technologies Limited
-- **Education:** Advanced Artificial Intelligence, University of Portsmouth
+- **Background:** Credit Analytics & Engineering, Indicina Technologies Limited
 - **ORCID:** [0009-0006-0870-6798](https://orcid.org/0009-0006-0870-6798)
 - **Website:** [admoll.dev](https://admoll.dev)
-- **GitHub:** [@admoll](https://github.com/admoll)
+- **GitHub:** [@Howdy-admoll](https://github.com/Howdy-admoll)
 
 ### Research Interests
 - Fuzzy inference systems for credit risk
