@@ -401,10 +401,10 @@ RiskSense is a research implementation for educational and testing purposes. Whi
 
 For questions, suggestions, or collaboration opportunities:
 
-- **Email:** [Your email]
-- **Twitter/X:** [@admoll](https://twitter.com/admoll)
-- **LinkedIn:** [Your LinkedIn]
-- **SSRN:** [Your SSRN Profile](https://ssrn.com)
+- **Email:** [admoll.adefemi@gmail.com]
+- **Twitter/X:** [@officialadmoll](https://twitter.com/officialadmoll)
+- **LinkedIn:** [Admoll Adefemi]
+- **SSRN:** [SSRN Profile](https://hq.ssrn.com/Participantfirst.cfm?PartId=11289508)
 
 ---
 
