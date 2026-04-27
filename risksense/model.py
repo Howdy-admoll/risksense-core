@@ -141,7 +141,7 @@ class RiskSenseModel:
         - Poor credit + low income → High risk (double jeopardy)
 
         Full rule set: 3 × 3 × 3 × 3 = 81 potential combinations
-        Implemented: 32 high-confidence rules; remainder → default medium
+        Implemented: 36 high-confidence rules (updated v1.1); remainder → default medium
         """
         rules = [
             # Strong approval signals (low risk)
@@ -338,6 +338,35 @@ class RiskSenseModel:
             ),
             ctrl.Rule(
                 self.credit_score['poor']
+                & self.debt_to_income['high'],
+                self.risk_score['high'],
+            ),
+            # Additional rules to handle edge cases and improve coverage (v1.1)
+            # Profile 2 fix: Medium income + low DTI + good credit + high stability → LOW
+            ctrl.Rule(
+                self.annual_income['medium']
+                & self.debt_to_income['low']
+                & self.credit_score['good']
+                & self.employment_stability['high'],
+                self.risk_score['low'],
+            ),
+            # Profile 6 fix: Low income + high DTI + poor credit + low stability → HIGH
+            ctrl.Rule(
+                self.annual_income['low']
+                & self.debt_to_income['high']
+                & self.credit_score['poor']
+                & self.employment_stability['low'],
+                self.risk_score['high'],
+            ),
+            # Edge case: Extremely poor credit (< 40) with employment instability → HIGH
+            ctrl.Rule(
+                self.credit_score['poor']
+                & self.employment_stability['low'],
+                self.risk_score['high'],
+            ),
+            # Edge case: Very low income + very high DTI → HIGH (regardless of credit)
+            ctrl.Rule(
+                self.annual_income['low']
                 & self.debt_to_income['high'],
                 self.risk_score['high'],
             ),
