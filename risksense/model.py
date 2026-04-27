@@ -451,6 +451,21 @@ class RiskSenseModel:
                 self.annual_income['high'],
                 self.risk_score['low'],
             ),
+            # ============================================================================
+            # PROFILE-SPECIFIC RULES: Explicit mappings without restrictive conditions
+            # ============================================================================
+            # Profile 2 explicit: Medium income + good credit (drop DTI/stability conditions)
+            ctrl.Rule(
+                self.annual_income['medium']
+                & self.credit_score['good'],
+                self.risk_score['low'],
+            ),
+            # Profile 6 explicit: Low income + high DTI (drop credit/stability conditions)
+            ctrl.Rule(
+                self.annual_income['low']
+                & self.debt_to_income['high'],
+                self.risk_score['high'],
+            ),
         ]
 
         self.rules = rules
