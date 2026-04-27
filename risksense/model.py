@@ -55,6 +55,11 @@ class RiskSenseModel:
 
         Output variable:
         - risk_score: 0–100 (aggregate risk assessment)
+        
+        v1.1 Changes:
+        - Adjusted output membership functions for cleaner separation
+        - Reduced overlap between Low/Medium/High categories
+        - Added 4 edge case rules for sparse coverage
         """
         # Input 1: Annual Income (NGN, in millions for clarity)
         self.annual_income = ctrl.Antecedent(
@@ -114,20 +119,23 @@ class RiskSenseModel:
         )
 
         # Output: Risk Score (0–100)
+        # v1.1: Adjusted membership functions for cleaner separation
+        #   OLD: low=[0,0,35], medium=[25,50,75], high=[65,100,100] (high overlap)
+        #   NEW: low=[0,15,35], medium=[35,50,65], high=[65,85,100] (no overlap)
         self.risk_score = ctrl.Consequent(
             np.arange(0, 101, 1), 'risk_score'
         )
         self.risk_score['low'] = fuzz.trimf(
-            self.risk_score.universe, [0, 0, 35]
+            self.risk_score.universe, [0, 15, 35]
         )
         self.risk_score['medium'] = fuzz.trimf(
-            self.risk_score.universe, [25, 50, 75]
+            self.risk_score.universe, [35, 50, 65]
         )
         self.risk_score['high'] = fuzz.trimf(
-            self.risk_score.universe, [65, 100, 100]
+            self.risk_score.universe, [65, 85, 100]
         )
 
-        # Define fuzzy rules (32 core rules covering all antecedent combinations)
+        # Define fuzzy rules (36 high-confidence rules)
         self._define_rules()
 
     def _define_rules(self):
@@ -141,7 +149,7 @@ class RiskSenseModel:
         - Poor credit + low income → High risk (double jeopardy)
 
         Full rule set: 3 × 3 × 3 × 3 = 81 potential combinations
-        Implemented: 36 high-confidence rules (updated v1.1); remainder → default medium
+        Implemented: 36 high-confidence rules (v1.1); remainder → default medium
         """
         rules = [
             # Strong approval signals (low risk)
