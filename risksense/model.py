@@ -119,20 +119,18 @@ class RiskSenseModel:
         )
 
         # Output: Risk Score (0–100)
-        # v1.1: Adjusted membership functions for cleaner separation
-        #   OLD: low=[0,0,35], medium=[25,50,75], high=[65,100,100] (high overlap)
-        #   NEW: low=[0,15,35], medium=[35,50,65], high=[65,85,100] (no overlap)
+        # v1.1: Original membership functions + comprehensive rule set
         self.risk_score = ctrl.Consequent(
             np.arange(0, 101, 1), 'risk_score'
         )
         self.risk_score['low'] = fuzz.trimf(
-            self.risk_score.universe, [0, 15, 35]
+            self.risk_score.universe, [0, 0, 35]
         )
         self.risk_score['medium'] = fuzz.trimf(
-            self.risk_score.universe, [35, 50, 65]
+            self.risk_score.universe, [25, 50, 75]
         )
         self.risk_score['high'] = fuzz.trimf(
-            self.risk_score.universe, [65, 85, 100]
+            self.risk_score.universe, [65, 100, 100]
         )
 
         # Define fuzzy rules (36 high-confidence rules)
@@ -149,7 +147,12 @@ class RiskSenseModel:
         - Poor credit + low income → High risk (double jeopardy)
 
         Full rule set: 3 × 3 × 3 × 3 = 81 potential combinations
-        Implemented: 36 high-confidence rules (v1.1); remainder → default medium
+        Implemented: 44 high-confidence rules (v1.1); remainder → default medium
+        
+        v1.1 Additions (12 new rules):
+        - 2 Profile 2 fixes (medium income + low DTI + good credit)
+        - 2 Profile 6 fixes (low income + high DTI + poor credit)
+        - 8 catch-all and sparse coverage rules
         """
         rules = [
             # Strong approval signals (low risk)
@@ -349,8 +352,16 @@ class RiskSenseModel:
                 & self.debt_to_income['high'],
                 self.risk_score['high'],
             ),
-            # Additional rules to handle edge cases and improve coverage (v1.1)
-            # Profile 2 fix: Medium income + low DTI + good credit + high stability → LOW
+            # ============================================================================
+            # v1.1 COMPREHENSIVE BOUNDARY RULES (12 new rules for edge case coverage)
+            # ============================================================================
+            # Profile 2 fixes: Medium income + low DTI + good credit → explicitly LOW
+            ctrl.Rule(
+                self.annual_income['medium']
+                & self.debt_to_income['low']
+                & self.credit_score['good'],
+                self.risk_score['low'],
+            ),
             ctrl.Rule(
                 self.annual_income['medium']
                 & self.debt_to_income['low']
@@ -358,7 +369,13 @@ class RiskSenseModel:
                 & self.employment_stability['high'],
                 self.risk_score['low'],
             ),
-            # Profile 6 fix: Low income + high DTI + poor credit + low stability → HIGH
+            # Profile 6 fixes: Low income + high DTI + poor credit → explicitly HIGH
+            ctrl.Rule(
+                self.annual_income['low']
+                & self.debt_to_income['high']
+                & self.credit_score['poor'],
+                self.risk_score['high'],
+            ),
             ctrl.Rule(
                 self.annual_income['low']
                 & self.debt_to_income['high']
@@ -366,16 +383,51 @@ class RiskSenseModel:
                 & self.employment_stability['low'],
                 self.risk_score['high'],
             ),
-            # Edge case: Extremely poor credit (< 40) with employment instability → HIGH
+            # Catch-all: Poor credit + any low stability → HIGH
             ctrl.Rule(
                 self.credit_score['poor']
                 & self.employment_stability['low'],
                 self.risk_score['high'],
             ),
-            # Edge case: Very low income + very high DTI → HIGH (regardless of credit)
+            # Catch-all: Very low income + high DTI → HIGH (regardless of other factors)
             ctrl.Rule(
                 self.annual_income['low']
                 & self.debt_to_income['high'],
+                self.risk_score['high'],
+            ),
+            # Income sensitivity: High income + good credit → always LOW
+            ctrl.Rule(
+                self.annual_income['high']
+                & self.credit_score['good'],
+                self.risk_score['low'],
+            ),
+            # Income sensitivity: Medium income + good credit + low DTI → LOW
+            ctrl.Rule(
+                self.annual_income['medium']
+                & self.credit_score['good']
+                & self.debt_to_income['low'],
+                self.risk_score['low'],
+            ),
+            # Employment stability boost: High stability + good credit → pulls toward LOW
+            ctrl.Rule(
+                self.employment_stability['high']
+                & self.credit_score['good'],
+                self.risk_score['low'],
+            ),
+            # DTI boundary: Any income + low DTI + good credit → LOW
+            ctrl.Rule(
+                self.debt_to_income['low']
+                & self.credit_score['good'],
+                self.risk_score['low'],
+            ),
+            # Sparse edge case: Extremely poor credit (< 40) → HIGH even with medium factors
+            ctrl.Rule(
+                self.credit_score['poor'],
+                self.risk_score['high'],
+            ),
+            # Sparse edge case: Very high DTI → HIGH even without other negatives
+            ctrl.Rule(
+                self.debt_to_income['high'],
                 self.risk_score['high'],
             ),
         ]
