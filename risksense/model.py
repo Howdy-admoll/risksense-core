@@ -76,14 +76,15 @@ class RiskSenseModel:
         )
 
         # Input 2: Debt-to-Income Ratio
+        # v1.1: Extended 'low' boundary to 0.45 to include 0.40 (Profile 2)
         self.debt_to_income = ctrl.Antecedent(
             np.arange(0, 1.01, 0.01), 'debt_to_income'
         )
         self.debt_to_income['low'] = fuzz.trimf(
-            self.debt_to_income.universe, [0, 0, 0.35]
+            self.debt_to_income.universe, [0, 0, 0.45]
         )
         self.debt_to_income['medium'] = fuzz.trimf(
-            self.debt_to_income.universe, [0.25, 0.55, 0.75]
+            self.debt_to_income.universe, [0.35, 0.55, 0.75]
         )
         self.debt_to_income['high'] = fuzz.trimf(
             self.debt_to_income.universe, [0.65, 1.0, 1.0]
@@ -429,6 +430,26 @@ class RiskSenseModel:
             ctrl.Rule(
                 self.debt_to_income['high'],
                 self.risk_score['high'],
+            ),
+            # ============================================================================
+            # FINAL v1.1: CATCH-ALL RULES FOR SPARSE COVERAGE
+            # ============================================================================
+            # Catch-all: ANY good credit (alone) → pull toward LOW
+            ctrl.Rule(
+                self.credit_score['good'],
+                self.risk_score['low'],
+            ),
+            # Catch-all: Medium income + good credit (with medium stability) → LOW
+            ctrl.Rule(
+                self.annual_income['medium']
+                & self.credit_score['good']
+                & self.employment_stability['medium'],
+                self.risk_score['low'],
+            ),
+            # Catch-all: High income (alone) → pull toward LOW
+            ctrl.Rule(
+                self.annual_income['high'],
+                self.risk_score['low'],
             ),
         ]
 
