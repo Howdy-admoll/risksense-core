@@ -2,7 +2,7 @@
 
 A production-grade Mamdani fuzzy inference system for credit risk scoring in fintech lending across African markets.
 
-## ✨ Features
+## Features
 
 - **49 Fuzzy Rules** — Comprehensive rule set covering all borrower segments
 - **89% Test Coverage** — 33/37 tests passing (4 edge cases at fuzzy boundaries)
@@ -10,7 +10,7 @@ A production-grade Mamdani fuzzy inference system for credit risk scoring in fin
 - **Fast Inference** — < 100ms per credit risk score
 - **Transparent Risk Scoring** — Explainable fuzzy logic outputs
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -75,7 +75,7 @@ for result in results:
 
 *See [FUZZY_BOUNDARIES.md](FUZZY_BOUNDARIES.md) for explanation of 4 edge cases.
 
-## 🏗️ Architecture
+## Architecture
 
 ### Input Variables
 - **annual_income** (0–10M NGN) — Borrower annual income
@@ -96,7 +96,7 @@ for result in results:
 - **Defuzzification:** Centroid method
 - **Performance:** < 100ms per inference
 
-## 📚 Documentation
+## Documentation
 
 - **[FUZZY_BOUNDARIES.md](FUZZY_BOUNDARIES.md)** — Explains 4 edge cases at category boundaries
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — Contribution guidelines
@@ -125,7 +125,7 @@ Lint code:
 flake8 risksense/ tests/
 ```
 
-## 📦 Dependencies
+## Dependencies
 
 All pinned for reproducibility:
 
@@ -144,7 +144,7 @@ black==24.1.1           — Code formatting
 flake8==7.0.0           — Code linting
 ```
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 Automated testing on every push:
 - ✅ Runs on Python 3.10, 3.11
@@ -155,7 +155,7 @@ Automated testing on every push:
 
 View workflows: [GitHub Actions](https://github.com/Howdy-admoll/risksense-core/actions)
 
-## 📋 Development Setup
+## Development Setup
 
 ```bash
 # Clone repo
@@ -177,7 +177,7 @@ black risksense/ tests/
 flake8 risksense/ tests/
 ```
 
-## 🤝 Contributing
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Development workflow
@@ -185,18 +185,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Code style guidelines
 - Fuzzy rule modification guide
 
-## 📄 License
+## License
 
 MIT License — See [LICENSE](LICENSE) file for details.
 
-## 👤 Author
+## Author
 
 **Ademola Adefemi**
 - GitHub: [@Howdy-admoll](https://github.com/Howdy-admoll)
 - ORCID: 0009-0006-0870-6798
 - Email: admoll.adefemi@gmail.com
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 This model implements Mamdani fuzzy inference for credit risk assessment in fintech lending. Designed for African fintech contexts with consideration for thin credit files and alternative data sources.
 

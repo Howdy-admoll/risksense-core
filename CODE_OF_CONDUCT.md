@@ -58,7 +58,7 @@ This Code of Conduct applies to:
 If you witness or experience a violation:
 
 1. **Document** — Note the incident (date, time, people involved, description)
-2. **Report** — Contact: hello@admoll.dev
+2. **Report** — Contact: admoll.adefemi@gmail.com
 3. **Be Specific** — Include details about what happened and impact
 4. **Privacy** — Your report will be treated confidentially
 
