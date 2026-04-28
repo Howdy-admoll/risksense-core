@@ -7,7 +7,7 @@ setup(
     name="risksense-core",
     version="1.0.0",
     author="Ademola Adefemi",
-    author_email="hello@admoll.dev",
+    author_email="admoll.adefemi@gmail.com",
     description="Production-grade Mamdani fuzzy inference system for credit risk scoring in fintech lending",
     long_description=long_description,
     long_description_content_type="text/markdown",

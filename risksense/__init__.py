@@ -16,7 +16,7 @@ Paper: https://ssrn.com (see SSRN profile for academic publication)
 from risksense.model import RiskSenseModel, create_model
 from risksense.profiles import get_profiles, get_profile_by_name, get_profiles_by_category
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
 __author__ = 'Ademola Adefemi'
 __orcid__ = '0009-0006-0870-6798'
 
