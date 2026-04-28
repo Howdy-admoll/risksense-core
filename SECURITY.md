@@ -8,7 +8,7 @@ If you discover a security vulnerability, please report it responsibly:
 
 ### How to Report
 
-Email: **hello@admoll.dev**
+Email: **admoll.adefemi@gmail.com**
 
 Include:
 - Description of the vulnerability
