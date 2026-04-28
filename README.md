@@ -103,7 +103,7 @@ for result in results:
 - **[SECURITY.md](SECURITY.md)** — Security policy & compliance notes
 - **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — Community standards
 
-## 🧪 Testing
+## Testing
 
 Run all tests:
 ```bash
