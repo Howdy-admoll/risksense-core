@@ -1,0 +1,18 @@
+# Core Dependencies
+numpy==1.26.4
+scikit-fuzzy==0.4.2
+matplotlib==3.8.3
+
+# Web Framework (Optional - for API)
+flask==3.0.0
+
+# Testing Dependencies
+pytest==7.4.4
+pytest-cov==4.1.0
+
+# Code Quality Tools
+black==24.1.1
+flake8==7.0.0
+
+# Additional Utilities
+packaging==23.2
